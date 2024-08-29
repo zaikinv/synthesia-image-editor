@@ -1,0 +1,12 @@
+.preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+
+  &__image {
+    max-width: 100%;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+}

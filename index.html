@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="Synthesia Image Editor: A powerful tool for editing images with ease, utilizing high-quality photos from Picsum." />
+  <link rel="preconnect" href="https://fastly.picsum.photos" />
+  <link rel="preconnect" href="https://picsum.photos" />
+  <!---
+  <script>
+    const imageCount = parseInt("<%= imageCount %>", 10);
+    const imageWidth = "<%= imageWidth %>";
+    const imageHeight = "<%= imageHeight %>";
+    const startId = (parseInt(new URLSearchParams(window.location.search).get('page') || '1', 10) - 1) * imageCount;
+
+    for (let i = startId; i < startId + imageCount; i++) {
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = `https://picsum.photos/id/${i}/${imageWidth}/${imageHeight}`;
+      document.head.appendChild(link);
+    }
+  </script>
+  --->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Synthesia Image Editor</title>
+</head>
+<body>
+<div id="root"></div>
+<script type="module" src="/src/main.tsx"></script>
+</body>
+</html>

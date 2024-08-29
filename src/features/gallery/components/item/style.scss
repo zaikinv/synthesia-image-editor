@@ -1,0 +1,23 @@
+.item {
+  width: auto;
+  overflow: hidden;
+
+  &_link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  &__meta {
+    font-weight: 200;
+    font-size: 0.875rem;
+    text-align: center;
+    margin-top: 0.25rem;
+  }
+}
+
+.item-meta {
+  &__value {
+    font-weight: 500;
+  }
+}

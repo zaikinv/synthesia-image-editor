@@ -1,0 +1,19 @@
+.paginator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0 1rem;
+
+  &__info {
+    margin: 0 1rem;
+    font-size: 1rem;
+  }
+
+  &__button {
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

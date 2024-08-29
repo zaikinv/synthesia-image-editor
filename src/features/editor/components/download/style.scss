@@ -1,0 +1,15 @@
+.download {
+  margin-top: 1rem;
+
+  &__button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    background: #0075ff;
+    color: white;
+
+    &:hover {
+      color: #e3e3e3;
+    }
+  }
+}

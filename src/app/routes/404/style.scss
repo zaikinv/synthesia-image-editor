@@ -1,0 +1,25 @@
+.not-found {
+  &__title {
+    font-size: 48px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  &__message {
+    font-size: 18px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  &__link {
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

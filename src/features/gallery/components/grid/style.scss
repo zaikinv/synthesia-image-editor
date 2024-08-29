@@ -1,0 +1,13 @@
+$desktop-breakpoint: 1024px;
+
+.grid {
+  display: grid;
+  gap: 2rem;
+  padding: 1rem;
+
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+
+  @media (min-width: $desktop-breakpoint) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

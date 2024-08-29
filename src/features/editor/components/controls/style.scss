@@ -1,0 +1,16 @@
+$wide-breakpoint: 1280px;
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+
+  @media (min-width: $wide-breakpoint) {
+    flex-direction: column;
+  }
+
+  &__input {
+    flex-grow: 1;
+  }
+}
