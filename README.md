@@ -5,6 +5,20 @@
 A handy content creation tool that lets you browse, edit, and download images using the free image gallery
 API Lorem Picsum.
 
+<details>
+<summary>Gallery</summary>
+
+![gallery](./assets/screenshot-1.png)
+
+</details>
+
+<details>
+<summary>Editor</summary>
+
+![editor](./assets/screenshot-2.png)
+
+</details>
+
 ## Prerequisites
 
 - Node: v20.14.0 (_recommended_)
