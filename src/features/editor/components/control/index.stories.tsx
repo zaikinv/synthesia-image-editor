@@ -24,6 +24,17 @@ export default meta;
 
 type Story = StoryObj<typeof Control>;
 
+const handleChangeMock = (
+  id: ControlEnum,
+  newValue: string | number | boolean,
+  updateStart: boolean,
+  updateEnd: boolean,
+) => {
+  console.log(
+    `handleChange called with id: ${id}, value: ${newValue}, updateStart: ${updateStart}, updateEnd: ${updateEnd}`,
+  );
+};
+
 export const Default: Story = {
   args: {
     type: 'input',
@@ -32,6 +43,7 @@ export const Default: Story = {
     value: 10,
     min: 0,
     max: 100,
+    handleChange: handleChangeMock,
   },
   render: (args) => <Control {...args} />,
 };
@@ -42,6 +54,7 @@ export const CheckboxControl: Story = {
     label: 'Default Checkbox',
     id: ControlEnum.GRAYSCALE,
     value: true,
+    handleChange: handleChangeMock,
   },
   render: (args) => <Control {...args} />,
 };
@@ -54,6 +67,7 @@ export const SliderControl: Story = {
     value: 50,
     min: 0,
     max: 100,
+    handleChange: handleChangeMock,
   },
   render: (args) => <Control {...args} />,
 };

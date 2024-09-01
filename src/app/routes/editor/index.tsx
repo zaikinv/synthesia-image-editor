@@ -40,14 +40,14 @@ export const ImageEditorRoute: FC = () => {
         <div className="editor__preview">
           <Preview />
         </div>
-        <div className="editor__sidebar editor-sidebar">
+        <div className="editor__sidebar">
           <a
             href="#"
             onClick={(e) => {
               e.preventDefault();
               navigate(-1);
             }}
-            className="editor-sidebar__link"
+            className="back-link"
           >
             ← Back to Gallery
           </a>

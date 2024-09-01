@@ -9,6 +9,7 @@ import {
   canUndo,
   canRedo,
   hasChanges,
+  createHistorySnapshot,
 } from './index';
 import { controlsConfig } from '../config';
 
@@ -31,21 +32,24 @@ describe('Editor State', () => {
     expect(state.value.redoStack.value).toEqual([]);
   });
 
-  it('should set editor state and update undo stack', () => {
-    setEditorState('width', 500, true, false);
+  it('should set editor state', () => {
+    createHistorySnapshot();
+    setEditorState('width', 500);
     expect(state.value.width.value).toBe(500);
     expect(state.value.undoStack.value.length).toBe(1);
   });
 
   it('should undo the last change', () => {
-    setEditorState('width', 500, true, false);
+    createHistorySnapshot();
+    setEditorState('width', 500);
     undo();
     expect(state.value.width.value).toBe(controlsConfig.width.max);
     expect(state.value.redoStack.value.length).toBe(1);
   });
 
   it('should redo the undone change', () => {
-    setEditorState('width', 500, true, false);
+    createHistorySnapshot();
+    setEditorState('width', 500);
     undo();
     redo();
     expect(state.value.width.value).toBe(500);
@@ -55,7 +59,8 @@ describe('Editor State', () => {
     expect(canUndo.value).toBe(false);
     expect(canRedo.value).toBe(false);
 
-    setEditorState('width', 500, true, false);
+    createHistorySnapshot();
+    setEditorState('width', 500);
     expect(canUndo.value).toBe(true);
     expect(canRedo.value).toBe(false);
 
@@ -86,7 +91,8 @@ describe('Editor State', () => {
   });
 
   it('should reset state and remove it from localStorage', () => {
-    setEditorState('width', 500, true, true);
+    createHistorySnapshot();
+    setEditorState('width', 500);
     reset();
 
     expect(Storage.prototype.removeItem).toHaveBeenCalledWith(
@@ -97,7 +103,8 @@ describe('Editor State', () => {
 
   it('should track if there are changes', () => {
     expect(hasChanges.value).toBe(false);
-    setEditorState('width', 500, true, false);
+    createHistorySnapshot();
+    setEditorState('width', 500);
     expect(hasChanges.value).toBe(true);
   });
 });

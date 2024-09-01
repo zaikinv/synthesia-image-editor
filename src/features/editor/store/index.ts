@@ -16,7 +16,7 @@ type EditorStateCurrent = {
   blur: number | null;
 };
 
-type EditorState = {
+export type EditorState = {
   [K in keyof EditorStateCurrent]: Signal<EditorStateCurrent[K]>;
 } & {
   undoStack: Signal<EditorStateCurrent[]>;
@@ -57,22 +57,7 @@ const applyStateSnapshot = (snapshot: EditorStateCurrent) => {
   editorState.grayscale.value = snapshot.grayscale;
   editorState.blur.value = snapshot.blur;
 
-  saveStateToLocalStorage();
-};
-
-const saveStateToLocalStorage = () => {
-  localStorage.setItem(
-    `${LOCAL_STORAGE_KEY}-${editorState.id.value}`,
-    JSON.stringify({
-      id: editorState.id.value,
-      width: editorState.width.value,
-      height: editorState.height.value,
-      grayscale: editorState.grayscale.value,
-      blur: editorState.blur.value,
-      undoStack: editorState.undoStack,
-      redoStack: editorState.redoStack,
-    }),
-  );
+  persistState();
 };
 
 export const undo = () => {
@@ -106,30 +91,44 @@ export const redo = () => {
 };
 
 export const reset = () => {
-  localStorage.removeItem(`${LOCAL_STORAGE_KEY}-${editorState.id.value}`);
+  try {
+    localStorage.removeItem(`${LOCAL_STORAGE_KEY}-${editorState.id.value}`);
+  } catch (error) {
+    console.error('Failed to reset state in local storage:', error);
+  }
   initDefaultState();
 };
 
 export const initializeEditorState = (id: string) => {
-  const storedState = localStorage.getItem(`${LOCAL_STORAGE_KEY}-${id}`);
-  if (storedState) {
-    console.log(
-      `Stored state found for the image: ${id}. Initializing the state.`,
-    );
+  try {
+    const storedState = localStorage.getItem(`${LOCAL_STORAGE_KEY}-${id}`);
+    if (storedState) {
+      console.log(
+        `Stored state found for the image: ${id}. Initializing the state.`,
+      );
 
-    const state = JSON.parse(storedState);
-    editorState.id.value = state.id;
-    editorState.width.value = state.width;
-    editorState.height.value = state.height;
-    editorState.grayscale.value = state.grayscale;
-    editorState.blur.value = state.blur;
-    editorState.undoStack.value = state.undoStack;
-    editorState.redoStack.value = state.redoStack;
-  } else {
-    console.log(
-      `No stored state found for the image ${id}. Initializing a new state.`,
-    );
+      const state = JSON.parse(storedState);
+      editorState.id.value = state.id;
+      editorState.width.value = state.width;
+      editorState.height.value = state.height;
+      editorState.grayscale.value = state.grayscale;
+      editorState.blur.value = state.blur;
+      editorState.undoStack.value = state.undoStack;
+      editorState.redoStack.value = state.redoStack;
+    } else {
+      console.log(
+        `No stored state found for the image ${id}. Initializing a new state.`,
+      );
 
+      editorState.id.value = id;
+      initDefaultState();
+    }
+  } catch (error) {
+    console.error(
+      'Failed to initialize editor state from local storage:',
+      error,
+    );
+    // Fall back to initializing a new state
     editorState.id.value = id;
     initDefaultState();
   }
@@ -138,23 +137,34 @@ export const initializeEditorState = (id: string) => {
 export const setEditorState = (
   field: keyof EditorState,
   value: string | number | boolean,
-  stateUpdateStart: boolean = false,
-  stateUpdateEnd: boolean = false,
 ) => {
-  if (!editorState[field]) return;
-
-  if (stateUpdateStart) {
-    editorState.undoStack.value = [
-      ...editorState.undoStack.value,
-      createStateSnapshot(),
-    ];
-    editorState.redoStack.value = [];
-  }
-
   editorState[field].value = value;
+};
 
-  if (stateUpdateEnd) {
-    saveStateToLocalStorage();
+export const createHistorySnapshot = () => {
+  editorState.undoStack.value = [
+    ...editorState.undoStack.value,
+    createStateSnapshot(),
+  ];
+  editorState.redoStack.value = [];
+};
+
+export const persistState = () => {
+  try {
+    localStorage.setItem(
+      `${LOCAL_STORAGE_KEY}-${editorState.id.value}`,
+      JSON.stringify({
+        id: editorState.id.value,
+        width: editorState.width.value,
+        height: editorState.height.value,
+        grayscale: editorState.grayscale.value,
+        blur: editorState.blur.value,
+        undoStack: editorState.undoStack,
+        redoStack: editorState.redoStack,
+      }),
+    );
+  } catch (error) {
+    console.error('Failed to save state to local storage:', error);
   }
 };
 

@@ -1,16 +1,14 @@
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { Control } from './index.tsx';
 import { Control as ControlEnum, ControlType } from '../../types';
-import { setEditorState } from '../../store';
-
-vi.mock('../../store', () => ({
-  setEditorState: vi.fn(),
-}));
 
 describe('Control', () => {
+  // @ts-expect-error import glitch
+  let handleChangeMock: vi.Mock;
+
   beforeEach(() => {
-    vi.clearAllMocks();
+    handleChangeMock = vi.fn();
   });
 
   afterEach(() => {
@@ -25,6 +23,7 @@ describe('Control', () => {
         id={ControlEnum.WIDTH}
         value={10}
         className="custom-input"
+        handleChange={handleChangeMock}
       />,
     );
 
@@ -42,6 +41,7 @@ describe('Control', () => {
         id={ControlEnum.GRAYSCALE}
         value={true}
         className="custom-checkbox"
+        handleChange={handleChangeMock}
       />,
     );
 
@@ -63,6 +63,7 @@ describe('Control', () => {
         min={0}
         max={100}
         className="custom-slider"
+        handleChange={handleChangeMock}
       />,
     );
 
@@ -74,20 +75,21 @@ describe('Control', () => {
     expect(slider.max).toBe('100');
   });
 
-  it('calls setEditorState when input control value changes', () => {
+  it('calls handleChange when input control value changes', () => {
     render(
       <Control
         type={ControlType.INPUT}
         label="Test Input"
         id={ControlEnum.HEIGHT}
         value={10}
+        handleChange={handleChangeMock}
       />,
     );
 
     const input = screen.getByLabelText('Test Input:') as HTMLInputElement;
     fireEvent.change(input, { target: { value: '20' } });
 
-    expect(setEditorState).toHaveBeenCalledWith(
+    expect(handleChangeMock).toHaveBeenCalledWith(
       ControlEnum.HEIGHT,
       20,
       false,
@@ -95,13 +97,14 @@ describe('Control', () => {
     );
   });
 
-  it('calls setEditorState when checkbox control value changes', () => {
+  it('calls handleChange when checkbox control value changes', () => {
     render(
       <Control
         type={ControlType.CHECKBOX}
         label="Test Checkbox"
         id={ControlEnum.GRAYSCALE}
         value={false}
+        handleChange={handleChangeMock}
       />,
     );
 
@@ -110,7 +113,7 @@ describe('Control', () => {
     ) as HTMLInputElement;
     fireEvent.click(checkbox);
 
-    expect(setEditorState).toHaveBeenCalledWith(
+    expect(handleChangeMock).toHaveBeenCalledWith(
       ControlEnum.GRAYSCALE,
       true,
       true,
@@ -118,7 +121,7 @@ describe('Control', () => {
     );
   });
 
-  it('calls setEditorState when slider control value changes', () => {
+  it('calls handleChange when slider control value changes', () => {
     render(
       <Control
         type={ControlType.SLIDER}
@@ -127,13 +130,14 @@ describe('Control', () => {
         value={50}
         min={0}
         max={100}
+        handleChange={handleChangeMock}
       />,
     );
 
     const slider = screen.getByLabelText('Test Slider:') as HTMLInputElement;
     fireEvent.input(slider, { target: { value: '75' } });
 
-    expect(setEditorState).toHaveBeenCalledWith(
+    expect(handleChangeMock).toHaveBeenCalledWith(
       ControlEnum.BLUR,
       75,
       false,

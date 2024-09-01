@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import './style.scss';
 import { Control as ControlEnum } from '../../types';
-import { setEditorState } from '../../store';
 
 interface ControlProps {
   type: 'input' | 'checkbox' | 'slider';
@@ -11,6 +10,12 @@ interface ControlProps {
   min?: number;
   max?: number;
   className?: string;
+  handleChange: (
+    id: ControlEnum,
+    newValue: string | number | boolean,
+    updateStart: boolean,
+    updateEnd: boolean,
+  ) => void;
 }
 
 export const Control: FC<ControlProps> = ({
@@ -20,8 +25,9 @@ export const Control: FC<ControlProps> = ({
   value,
   min,
   max,
+  handleChange,
 }) => {
-  const handleChange = (
+  const onChange = (
     e:
       | React.MouseEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLInputElement>
@@ -33,7 +39,7 @@ export const Control: FC<ControlProps> = ({
     const target = e.target as HTMLInputElement;
     const newValue =
       target.type === 'checkbox' ? target.checked : Number(target.value);
-    setEditorState(id, newValue, updateStart, updateEnd);
+    handleChange(id, newValue, updateStart, updateEnd);
   };
 
   const numberInput = (
@@ -41,9 +47,9 @@ export const Control: FC<ControlProps> = ({
       type="number"
       id={id}
       value={value as number}
-      onChange={(e) => handleChange(e, false, false)}
-      onMouseDown={(e) => handleChange(e, true, false)}
-      onMouseUp={(e) => handleChange(e, false, true)}
+      onChange={(e) => onChange(e, false, false)}
+      onMouseDown={(e) => onChange(e, true, false)}
+      onMouseUp={(e) => onChange(e, false, true)}
     />
   );
 
@@ -52,7 +58,7 @@ export const Control: FC<ControlProps> = ({
       type="checkbox"
       id={id}
       checked={value as boolean}
-      onChange={(e) => handleChange(e, true, true)}
+      onChange={(e) => onChange(e, true, true)}
     />
   );
 
@@ -63,11 +69,11 @@ export const Control: FC<ControlProps> = ({
       min={min}
       max={max}
       value={value as number}
-      onInput={(e) => handleChange(e, false, false)}
-      onMouseDown={(e) => handleChange(e, true, false)}
-      onTouchStart={(e) => handleChange(e, true, false)}
-      onMouseUp={(e) => handleChange(e, false, true)}
-      onTouchEnd={(e) => handleChange(e, false, true)}
+      onInput={(e) => onChange(e, false, false)}
+      onMouseDown={(e) => onChange(e, true, false)}
+      onTouchStart={(e) => onChange(e, true, false)}
+      onMouseUp={(e) => onChange(e, false, true)}
+      onTouchEnd={(e) => onChange(e, false, true)}
     />
   );
 

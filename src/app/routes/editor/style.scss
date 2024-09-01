@@ -51,6 +51,7 @@ $wide-breakpoint: 1280px;
 .info-box {
   background: #f7f7f7;
   padding: 1rem;
+  margin-bottom: 1rem;
 
   &__link {
     color: #007bff;
@@ -62,8 +63,6 @@ $wide-breakpoint: 1280px;
   }
 }
 
-.editor-sidebar {
-  &__link {
-    margin-bottom: 1rem;
-  }
+.back-link {
+  margin-bottom: 1rem;
 }
