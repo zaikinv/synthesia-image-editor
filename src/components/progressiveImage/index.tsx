@@ -42,7 +42,15 @@ export const ProgressiveImage: FC<ProgressiveImageProps> = ({
 
   return (
     <div className="container">
-      {!isHighResLoaded && <div className="skeleton" />}
+      {!isHighResLoaded && (
+        <div
+          className="skeleton"
+          style={{
+            width: targetWidth,
+            height: targetHeight,
+          }}
+        />
+      )}
       <img
         ref={imgRef.ref}
         src={isHighResLoaded ? highResImageUrl : lowResImageUrl}
