@@ -1,7 +1,37 @@
+$desktop-breakpoint: 1024px;
+
 .app-container {
   display: flex;
   justify-content: center;
   margin: auto;
   max-width: 1280px;
   flex-direction: column;
+
+  &__header {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    width: max-content;
+    cursor: pointer;
+  }
+}
+
+.logo {
+  height: 1.5rem;
+
+  @media (min-width: $desktop-breakpoint) {
+    height: 2rem;
+  }
+}
+
+.name {
+  font-size: 1.2rem;
+  font-weight: 200;
+  padding: 0.5rem;
+
+  @media (min-width: $desktop-breakpoint) {
+    font-size: 1.5rem;
+    font-weight: 400;
+    padding: 1rem;
+  }
 }

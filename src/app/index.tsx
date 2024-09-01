@@ -4,6 +4,7 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import { appConfig } from '../config.ts';
+import logo from '../assets/logo.png';
 
 import './style.scss';
 
@@ -60,7 +61,13 @@ export const App = () => {
 
   return (
     <div className="app-container">
-      <h2>Synthesia Image Editor</h2>
+      <div
+        className="app-container__header"
+        onClick={() => (window.location.href = '/')}
+      >
+        <img src={logo} alt="Logo" className="logo" />
+        <h2 className="name">Image Editor</h2>
+      </div>
       <RouterProvider router={router} />
     </div>
   );

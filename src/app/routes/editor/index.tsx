@@ -21,6 +21,7 @@ export const ImageEditorRoute: FC = () => {
   useEffect(() => {
     initializeEditorState(image?.id);
     if (hasChanges.value) {
+      // display message only when returning back to the page
       setHasUnsavedChanges(true);
     }
   }, [image]);

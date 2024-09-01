@@ -15,25 +15,25 @@ API Lorem Picsum.
 Clone the project
 
 ```bash
-  git clone https://github.com/zaikinv/synthesia-image-editor.git
+git clone https://github.com/zaikinv/synthesia-image-editor.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd synthesia-image-editor
+cd synthesia-image-editor
 ```
 
 Install dependencies
 
 ```bash
-  npm i
+npm i
 ```
 
 Start the server
 
 ```bash
-  npm run dev
+npm run dev
 ```
 
 Open `http://localhost:5173/` in your browser.
@@ -85,11 +85,11 @@ Open `http://localhost:4173/` in your browser.
 
 ## Storybook
 
-### Run locally
-
 ```bash
-npm run test:unit
+npm run storybook
 ```
+
+Open `http://localhost:6006/` in your browser.
 
 Also available on Vercel: [Synthesia Image Editor Storybook](https://synthesia-image-editor-storybook.vercel.app).
 
@@ -112,5 +112,5 @@ npm run test:e2e
 #### UI mode
 
 ```bash
-npm run test:e2e:ui  
+npm run test:e2e-ui  
 ```
