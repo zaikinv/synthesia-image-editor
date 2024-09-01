@@ -1,3 +1,4 @@
 import { getImageUrl } from './imageUrl.ts';
 import { getScaledImageDimensions } from './imageScaledDimensions';
-export { getImageUrl, getScaledImageDimensions };
+import { downloadFromUrl } from './downloadFile';
+export { downloadFromUrl, getImageUrl, getScaledImageDimensions };

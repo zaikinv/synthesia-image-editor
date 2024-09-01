@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import path from 'path';
 
 test.describe('Image Gallery and Editor Tests', () => {
   test('Should load image gallery with pagination', async ({ page }) => {
@@ -54,19 +55,20 @@ test.describe('Image Gallery and Editor Tests', () => {
   });
 
   test('Should download edited image', async ({ page }) => {
+    const downloadPath = path.resolve(process.cwd(), 'downloads');
+
     await page.goto('http://localhost:5173/edit/1');
 
-    await page.click('.download__button');
-
-    const [newTab] = await Promise.all([
-      page.waitForEvent('popup'),
+    const [download] = await Promise.all([
+      page.waitForEvent('download'),
       page.click('.download__button'),
     ]);
 
-    await newTab.waitForLoadState();
-    expect(newTab.url()).toContain(
-      'https://fastly.picsum.photos/id/1/900/600.jpg',
-    );
+    const filePath = path.join(downloadPath, download.suggestedFilename());
+    await download.saveAs(filePath);
+
+    const fileExists = await download.path();
+    expect(fileExists).toBeTruthy();
   });
 
   test('Should persist state after page refresh', async ({ page }) => {
