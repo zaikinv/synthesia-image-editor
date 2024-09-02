@@ -23,6 +23,7 @@ API Lorem Picsum.
 
 - Node: v20.14.0 (_recommended_)
 - NPM: 10.8.2 (_recommended_)
+- Playwright (run `npx playwright install`)
 
 ## Run Locally
 
@@ -119,11 +120,15 @@ npm run test:unit
 
 #### Headless mode
 
+Playwright installation is required. Check [Prerequisites](#prerequisites) before running.
+
 ```bash
 npm run test:e2e
 ```
 
 #### UI mode
+
+Playwright installation is required. Check [Prerequisites](#prerequisites) before running.
 
 ```bash
 npm run test:e2e-ui  
